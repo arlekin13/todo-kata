@@ -1,5 +1,5 @@
 import React from 'react';
-import TaskFilter from '../TaskFilter';
+import TaskFilter from '../TaskFilter/TaskFilter';
 import './Footer.css'
 
 function Footer() {

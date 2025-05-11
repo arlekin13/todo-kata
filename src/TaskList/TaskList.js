@@ -1,8 +1,9 @@
 import React from 'react';
-import Task from './Task';
+import Task from '../Task/Task';
+import './TaskList.css'
 
 function TaskList() {
-  //  Временные данные задач
+  
   const tasks = [
     { id: 1, description: 'Завершить задание', completed: false, createdAt: new Date() },
     { id: 2, description: 'Проверить код', completed: true, createdAt: new Date() },

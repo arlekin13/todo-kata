@@ -6,7 +6,9 @@ function Footer() {
   return (
     <footer className="footer">
       <span className="todo-count">1 items left</span>
-      <TaskFilter />
+      <TaskFilter 
+      filter={filter}
+      onSetFilter={onSetFilter}/>
       <button className="clear-completed">Clear completed</button> 
     </footer>
   );

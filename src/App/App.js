@@ -17,6 +17,7 @@ function App() {
     { id: 3, description: 'Active task', completed: false, createdAt: new Date(), editing: false },
   ]);
 
+  const [filter,setFilter]=useState('all')
   const toggleCompleted =(id)=>{
     setTasks(
       tasks.map(task=>{
@@ -41,15 +42,33 @@ function App() {
     setTasks(tasks.filter(task=>task.id!==id))
   }
 
+  const setFilterType=(filterType)=>{
+    setFilter(filterType)
+}
+  const getFilteredTasks=()=>{
+    switch(filter){
+      case 'active':return tasks.filter(task=>!task.completed)
+      case 'completed':return tasks.filter(task=>task.completed)
+      default: return tasks;
+    }
+  }
+
+  const filteredTasks =getFilteredTasks()
+
+
     return(
       <section className='todoapp'>
         <NewTaskForm onAddTask = {addTask}/>
       <section className="main">
         <TaskList 
-        tasks={tasks}
+        tasks={filteredTasks}
         onToggleCompleted={toggleCompleted}
-        onDeleteTask={deleteTask}  />
-        <Footer />
+        onDeleteTask={deleteTask}  
+        />
+        <Footer 
+        filter={filter}
+        onSetFilter={setFilterType}
+        />
       </section>
       </section>
     )

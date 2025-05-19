@@ -5,6 +5,7 @@ import './App.css'
 import Footer from '../Footer'; 
 import TaskList from '../TaskList';
 import NewTaskForm from '../NewTaskForm';
+import { isThisQuarter } from 'date-fns';
 
 
 
@@ -26,14 +27,23 @@ function App() {
       })
     )
   }
-
+  const addTask =(description)=>{
+    const newTask={
+      id:Date.now(),
+      description: description,
+      completed: false,
+      createdAt: new Date(),
+      editing: false,
+    };
+    setTasks([newTask, ...tasks])
+  }
   const deleteTask =(id) =>{
     setTasks(tasks.filter(task=>task.id!==id))
   }
 
     return(
       <section className='todoapp'>
-        <NewTaskForm />
+        <NewTaskForm onAddTask = {addTask}/>
       <section className="main">
         <TaskList 
         tasks={tasks}

@@ -2,7 +2,7 @@ import React from 'react';
 import Task from '../Task/Task';
 import './TaskList.css'
 
-function TaskList({tasks, onToggleCompleted ,onDeleteTask}) {
+function TaskList({tasks, onToggleCompleted ,onDeleteTask,editId,onStartEdit,onUpdateTask}) {
   
   
   return (
@@ -13,6 +13,9 @@ function TaskList({tasks, onToggleCompleted ,onDeleteTask}) {
       task={task}
       onToggleCompleted={()=> onToggleCompleted(task.id)}
       onDeleteTask={()=> onDeleteTask(task.id)}
+      onStartEdit={()=>onStartEdit(task.id)}
+      editId={editId}
+      onUpdateTask={onUpdateTask}
       />
     ))}
     

@@ -1,10 +1,11 @@
 import React from 'react';
 import './TaskFilter.css'
 
-function TaskFilter(filter, onSetFilter) {
+function TaskFilter({filter, onSetFilter}) {
   return (
     <ul className="filters">
       <li>
+      
         <button className={filter==='all'? 'selected': ''}
         onClick={()=>onSetFilter('all')}
         >
@@ -18,7 +19,7 @@ function TaskFilter(filter, onSetFilter) {
         onClick={()=>onSetFilter('completed')}>
           Completed
         </button>
-       
+      
       </li>
       
     </ul>

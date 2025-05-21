@@ -1,5 +1,6 @@
 import React, { useEffect, useState ,useRef} from 'react';
 import { formatDistanceToNow } from 'date-fns';
+import PropTypes from 'prop-types'
 import './Task.css'
 
 function Task({ task, onToggleCompleted,onDeleteTask,editId,onStartEdit,onUpdateTask }) {
@@ -68,5 +69,21 @@ if(e.key==="Enter"){
     </>
   );
 }
+
+Task.propTypes = {
+  task: PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  description:PropTypes.string.isRequired,
+  completed: PropTypes.bool.isRequired,
+  createdAt:PropTypes.instanceOf(Date).isRequired,
+  }).isRequired,
+  onToggleCompleted: PropTypes.func.isRequired,
+  onDeleteTask: PropTypes.func.isRequired,
+  editId: PropTypes.number,
+  onStartEdit: PropTypes.func.isRequired,
+  onUpdateTask: PropTypes.func.isRequired ,
+}
+
+
 
 export default Task;

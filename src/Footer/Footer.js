@@ -1,6 +1,7 @@
 import React from 'react';
 import TaskFilter from '../TaskFilter/TaskFilter';
 import './Footer.css'
+import PropTypes from 'prop-types'
 
 function Footer({filter,onSetFilter,onClearCompleted,activeCount}) {
   return (
@@ -19,6 +20,11 @@ function Footer({filter,onSetFilter,onClearCompleted,activeCount}) {
     </footer>
   );
 }
+Footer.propType={
+filter:PropTypes.oneOf(['all', 'active', 'completed']).isRequired,
+ onSetFilter:PropTypes.func.isRequired,
+ onClearCompleted: PropTypes.func.isRequired,
+activeCount: PropTypes.number.isRequired,}
 
 export default Footer;
 

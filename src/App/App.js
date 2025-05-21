@@ -5,7 +5,7 @@ import './App.css'
 import Footer from '../Footer'; 
 import TaskList from '../TaskList';
 import NewTaskForm from '../NewTaskForm';
-import { isThisQuarter } from 'date-fns';
+import PropTypes from 'prop-types';
 
 
 
@@ -105,5 +105,7 @@ function App() {
       </section>
     )
 }
-
+App.propTypes={
+  tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
+}
 export default App

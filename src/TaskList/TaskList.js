@@ -1,5 +1,6 @@
 import React from 'react';
 import Task from '../Task/Task';
+import PropTypes from 'prop-types'
 import './TaskList.css'
 
 function TaskList({tasks, onToggleCompleted ,onDeleteTask,editId,onStartEdit,onUpdateTask}) {
@@ -21,6 +22,26 @@ function TaskList({tasks, onToggleCompleted ,onDeleteTask,editId,onStartEdit,onU
     
   </ul>
   );
+}
+
+TaskList.propTypes={
+task: PropTypes.arrayOf(
+  PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  description:PropTypes.string.isRequired,
+  completed: PropTypes.bool.isRequired,
+  createdAt:PropTypes.instanceOf(Date).isRequired,
+  })
+).isRequired,
+  onToggleCompleted: PropTypes.func.isRequired,
+  onDeleteTask: PropTypes.func.isRequired,
+  editId: PropTypes.number,
+  onStartEdit: PropTypes.func.isRequired,
+  onUpdateTask: PropTypes.func.isRequired ,
+}
+
+TaskList.defaultProps={
+  editId:null,
 }
 
 export default TaskList;

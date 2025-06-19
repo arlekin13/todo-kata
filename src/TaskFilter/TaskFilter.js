@@ -1,6 +1,6 @@
-import React from 'react';
-import './TaskFilter.css';
-import PropTypes from 'prop-types';
+import React from 'react'
+import './TaskFilter.css'
+import PropTypes from 'prop-types'
 
 function TaskFilter({ filter, onSetFilter }) {
   return (
@@ -17,11 +17,11 @@ function TaskFilter({ filter, onSetFilter }) {
         </button>
       </li>
     </ul>
-  );
+  )
 }
 TaskFilter.propType = {
   filter: PropTypes.oneOf(['all', 'active', 'completed']).isRequired,
   onSetFilter: PropTypes.func.isRequired,
-};
+}
 
-export default TaskFilter;
+export default TaskFilter

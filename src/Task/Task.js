@@ -1,33 +1,33 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { formatDistanceToNow } from 'date-fns';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState, useRef } from 'react'
+import { formatDistanceToNow } from 'date-fns'
+import PropTypes from 'prop-types'
 
-import './Task.css';
-import Timer from '../Timer/Timer';
-import '../Timer/Timer.css';
+import './Task.css'
+import Timer from '../Timer/Timer'
+import '../Timer/Timer.css'
 
-function Task({ task, onToggleCompleted, onDeleteTask, editId, onStartEdit, onUpdateTask, onTimeUpdate }) {
-  const { description, completed, createdAt, id } = task;
+function Task({ task, onToggleCompleted, onDeleteTask, editId, onStartEdit, onUpdateTask }) {
+  const { description, completed, createdAt, id } = task
 
-  const isEdit = editId === id;
-  const [editValue, setEditValue] = useState(description);
-  const inputRef = useRef(null);
+  const isEdit = editId === id
+  const [editValue, setEditValue] = useState(description)
+  const inputRef = useRef(null)
 
   useEffect(() => {
     if (isEdit) {
-      inputRef.current.focus();
+      inputRef.current.focus()
     }
-  }, [isEdit]);
+  }, [isEdit])
 
   const handleEditChange = (e) => {
-    setEditValue(e.target.value);
-  };
+    setEditValue(e.target.value)
+  }
 
   const handleEditSubmit = (e) => {
     if (e.key === 'Enter') {
-      onUpdateTask(id, editValue);
+      onUpdateTask(id, editValue)
     }
-  };
+  }
 
   return (
     <>
@@ -60,7 +60,7 @@ function Task({ task, onToggleCompleted, onDeleteTask, editId, onStartEdit, onUp
         )}
       </li>
     </>
-  );
+  )
 }
 
 Task.propTypes = {
@@ -77,6 +77,6 @@ Task.propTypes = {
   onStartEdit: PropTypes.func.isRequired,
   onUpdateTask: PropTypes.func.isRequired,
   onTimeUpdate: PropTypes.func,
-};
+}
 
-export default Task;
+export default Task

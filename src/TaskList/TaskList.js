@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import Task from '../Task/Task';
-import './TaskList.css';
+import Task from '../Task/Task'
+import './TaskList.css'
 
 function TaskList({ tasks, onToggleCompleted, onDeleteTask, editId, onStartEdit, onUpdateTask }) {
   return (
@@ -19,7 +19,7 @@ function TaskList({ tasks, onToggleCompleted, onDeleteTask, editId, onStartEdit,
         />
       ))}
     </ul>
-  );
+  )
 }
 
 TaskList.propTypes = {
@@ -36,10 +36,10 @@ TaskList.propTypes = {
   editId: PropTypes.number,
   onStartEdit: PropTypes.func.isRequired,
   onUpdateTask: PropTypes.func.isRequired,
-};
+}
 
 TaskList.defaultProps = {
   editId: null,
-};
+}
 
-export default TaskList;
+export default TaskList

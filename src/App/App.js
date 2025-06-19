@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 
-import './App.css';
-import Footer from '../Footer';
-import TaskList from '../TaskList';
-import NewTaskForm from '../NewTaskForm';
+import './App.css'
+import Footer from '../Footer'
+import TaskList from '../TaskList'
+import NewTaskForm from '../NewTaskForm'
 
 function App() {
   const [tasks, setTasks] = useState([
     {
       id: 1,
       description: 'Completed task ',
-      completed: false,
+      completed: true,
       createdAt: new Date(),
       editing: false,
       timeSpent: 0,
@@ -20,7 +20,7 @@ function App() {
     {
       id: 2,
       description: 'Editing task',
-      completed: true,
+      completed: false,
       createdAt: new Date(),
       editing: true,
       timeSpent: 0,
@@ -35,32 +35,32 @@ function App() {
       timeSpent: 0,
       timerActive: false,
     },
-  ]);
+  ])
 
-  const [filter, setFilter] = useState('all');
-  const [editId, setEditId] = useState(null);
-  const [activeTimerId, setActiveTimerId] = useState(null);
+  const [filter, setFilter] = useState('all')
+  const [editId, setEditId] = useState(null)
+  const [activeTimerId, setActiveTimerId] = useState(null)
 
   useEffect(() => {
-    const savedTasks = JSON.parse(localStorage.getItem('tasks'));
-    if (savedTasks) setTasks(savedTasks);
-  }, []);
+    const savedTasks = JSON.parse(localStorage.getItem('tasks'))
+    if (savedTasks) setTasks(savedTasks)
+  }, [])
   useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  }, [tasks]);
+    localStorage.setItem('tasks', JSON.stringify(tasks))
+  }, [tasks])
 
-  const activeCount = tasks.filter((task) => !task.completed).length;
+  const activeCount = tasks.filter((task) => !task.completed).length
 
   const toggleCompleted = (id) => {
     setTasks(
       tasks.map((task) => {
         if (task.id === id) {
-          return { ...task, completed: !task.completed };
+          return { ...task, completed: !task.completed }
         }
-        return task;
+        return task
       })
-    );
-  };
+    )
+  }
   const addTask = (description) => {
     const newTask = {
       id: Date.now(),
@@ -70,61 +70,61 @@ function App() {
       editing: false,
       timerSpend: 0,
       timerActive: false,
-    };
-    setTasks([newTask, ...tasks]);
-  };
+    }
+    setTasks([newTask, ...tasks])
+  }
   const deleteTask = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id));
-    if (activeTimerId === id) setActiveTimerId(null);
-  };
+    setTasks(tasks.filter((task) => task.id !== id))
+    if (activeTimerId === id) setActiveTimerId(null)
+  }
 
   const updateTaskTime = (id, timeSpent, timerActive) => {
     setTasks((task) => {
       if (task.id === id) {
-        if (timerActive) setActiveTimer(id);
-        return { ...task, timeSpent, timerActive };
+        if (timerActive) setActiveTimerId(id)
+        return { ...task, timeSpent, timerActive }
       }
       if (timerActive && TaskList.timerActive) {
-        return { ...task, timerActive: false };
+        return { ...task, timerActive: false }
       }
-      return task;
-    });
-  };
+      return task
+    })
+  }
 
   const setFilterType = (filterType) => {
-    setFilter(filterType);
-  };
+    setFilter(filterType)
+  }
   const getFilteredTasks = () => {
     switch (filter) {
-      case 'active':
-        return tasks.filter((task) => !task.completed);
-      case 'completed':
-        return tasks.filter((task) => task.completed);
-      default:
-        return tasks;
+    case 'active':
+      return tasks.filter((task) => !task.completed)
+    case 'completed':
+      return tasks.filter((task) => task.completed)
+    default:
+      return tasks
     }
-  };
+  }
 
-  const filteredTasks = getFilteredTasks();
+  const filteredTasks = getFilteredTasks()
 
   const clearCompleted = () => {
-    setTasks(tasks.filter((task) => !task.completed));
-  };
+    setTasks(tasks.filter((task) => !task.completed))
+  }
 
   const startEdit = (id) => {
-    setEditId(id);
-  };
+    setEditId(id)
+  }
   const updateTask = (id, newDescription) => {
     setTasks(
       tasks.map((task) => {
         if (task.id === id) {
-          return { ...task, description: newDescription, editing: false };
+          return { ...task, description: newDescription, editing: false }
         }
-        return task;
+        return task
       })
-    );
-    setEditId(null);
-  };
+    )
+    setEditId(null)
+  }
 
   return (
     <section className="todoapp">
@@ -138,6 +138,7 @@ function App() {
           editId={editId}
           onUpdateTask={updateTask}
           activeTimerId={activeTimerId}
+          onUpdateTaskTime={updateTaskTime}
         />
 
         <Footer
@@ -148,9 +149,9 @@ function App() {
         />
       </section>
     </section>
-  );
+  )
 }
 App.propTypes = {
   tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
-export default App;
+}
+export default App

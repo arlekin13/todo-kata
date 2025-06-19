@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useState } from 'react'
+import PropTypes from 'prop-types'
 
 function NewTaskForm({ onAddTask }) {
-  const [newTaskText, setNewTaskText] = useState('');
+  const [newTaskText, setNewTaskText] = useState('')
   const handleInputChange = (e) => {
-    setNewTaskText(e.target.value);
-  };
+    setNewTaskText(e.target.value)
+  }
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && newTaskText.trim() !== '') {
-      onAddTask(newTaskText.trim());
-      setNewTaskText('');
+      onAddTask(newTaskText.trim())
+      setNewTaskText('')
     }
-  };
+  }
 
   return (
     <header className="header">
@@ -25,8 +25,8 @@ function NewTaskForm({ onAddTask }) {
         onKeyDown={handleKeyDown}
       />
     </header>
-  );
+  )
 }
-NewTaskForm.propTypes = { onAddTask: PropTypes.func.isRequired };
+NewTaskForm.propTypes = { onAddTask: PropTypes.func.isRequired }
 
-export default NewTaskForm;
+export default NewTaskForm

@@ -1,33 +1,66 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 
-import './App.css'
-import Footer from '../Footer'
-import TaskList from '../TaskList'
-import NewTaskForm from '../NewTaskForm'
+import './App.css';
+import Footer from '../Footer';
+import TaskList from '../TaskList';
+import NewTaskForm from '../NewTaskForm';
 
 function App() {
   const [tasks, setTasks] = useState([
-    { id: 1, description: 'Completed task ', completed: false, createdAt: new Date(), editing: false },
-    { id: 2, description: 'Editing task', completed: true, createdAt: new Date(), editing: true },
-    { id: 3, description: 'Active task', completed: false, createdAt: new Date(), editing: false },
-  ])
+    {
+      id: 1,
+      description: 'Completed task ',
+      completed: false,
+      createdAt: new Date(),
+      editing: false,
+      timeSpent: 0,
+      timerActive: false,
+    },
+    {
+      id: 2,
+      description: 'Editing task',
+      completed: true,
+      createdAt: new Date(),
+      editing: true,
+      timeSpent: 0,
+      timerActive: false,
+    },
+    {
+      id: 3,
+      description: 'Active task',
+      completed: false,
+      createdAt: new Date(),
+      editing: false,
+      timeSpent: 0,
+      timerActive: false,
+    },
+  ]);
 
-  const [filter, setFilter] = useState('all')
-  const [editId, setEditId] = useState(null)
+  const [filter, setFilter] = useState('all');
+  const [editId, setEditId] = useState(null);
+  const [activeTimerId, setActiveTimerId] = useState(null);
 
-  const activeCount = tasks.filter((task) => !task.completed).length
+  useEffect(() => {
+    const savedTasks = JSON.parse(localStorage.getItem('tasks'));
+    if (savedTasks) setTasks(savedTasks);
+  }, []);
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
+
+  const activeCount = tasks.filter((task) => !task.completed).length;
 
   const toggleCompleted = (id) => {
     setTasks(
       tasks.map((task) => {
         if (task.id === id) {
-          return { ...task, completed: !task.completed }
+          return { ...task, completed: !task.completed };
         }
-        return task
+        return task;
       })
-    )
-  }
+    );
+  };
   const addTask = (description) => {
     const newTask = {
       id: Date.now(),
@@ -35,47 +68,63 @@ function App() {
       completed: false,
       createdAt: new Date(),
       editing: false,
-    }
-    setTasks([newTask, ...tasks])
-  }
+      timerSpend: 0,
+      timerActive: false,
+    };
+    setTasks([newTask, ...tasks]);
+  };
   const deleteTask = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id))
-  }
+    setTasks(tasks.filter((task) => task.id !== id));
+    if (activeTimerId === id) setActiveTimerId(null);
+  };
+
+  const updateTaskTime = (id, timeSpent, timerActive) => {
+    setTasks((task) => {
+      if (task.id === id) {
+        if (timerActive) setActiveTimer(id);
+        return { ...task, timeSpent, timerActive };
+      }
+      if (timerActive && TaskList.timerActive) {
+        return { ...task, timerActive: false };
+      }
+      return task;
+    });
+  };
 
   const setFilterType = (filterType) => {
-    setFilter(filterType)
-  }
+    setFilter(filterType);
+  };
   const getFilteredTasks = () => {
     switch (filter) {
-    case 'active':
-      return tasks.filter((task) => !task.completed)
-    case 'completed':
-      return tasks.filter((task) => task.completed)
-    default:
-      return tasks
+      case 'active':
+        return tasks.filter((task) => !task.completed);
+      case 'completed':
+        return tasks.filter((task) => task.completed);
+      default:
+        return tasks;
     }
-  }
+  };
 
-  const filteredTasks = getFilteredTasks()
+  const filteredTasks = getFilteredTasks();
 
   const clearCompleted = () => {
-    setTasks(tasks.filter((task) => !task.completed))
-  }
+    setTasks(tasks.filter((task) => !task.completed));
+  };
 
   const startEdit = (id) => {
-    setEditId(id)
-  }
+    setEditId(id);
+  };
   const updateTask = (id, newDescription) => {
     setTasks(
       tasks.map((task) => {
         if (task.id === id) {
-          return { ...task, description: newDescription, editing: false }
+          return { ...task, description: newDescription, editing: false };
         }
-        return task
+        return task;
       })
-    )
-    setEditId(null)
-  }
+    );
+    setEditId(null);
+  };
 
   return (
     <section className="todoapp">
@@ -88,6 +137,7 @@ function App() {
           onStartEdit={startEdit}
           editId={editId}
           onUpdateTask={updateTask}
+          activeTimerId={activeTimerId}
         />
 
         <Footer
@@ -98,9 +148,9 @@ function App() {
         />
       </section>
     </section>
-  )
+  );
 }
 App.propTypes = {
   tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
-}
-export default App
+};
+export default App;

@@ -1,38 +1,49 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { formatDistanceToNow } from 'date-fns'
-import PropTypes from 'prop-types'
-import './Task.css'
+import React, { useEffect, useState, useRef } from 'react';
+import { formatDistanceToNow } from 'date-fns';
+import PropTypes from 'prop-types';
 
-function Task({ task, onToggleCompleted, onDeleteTask, editId, onStartEdit, onUpdateTask }) {
-  const { description, completed, createdAt, id } = task
+import './Task.css';
+import Timer from '../Timer/Timer';
+import '../Timer/Timer.css';
 
-  const isEdit = editId === id
-  const [editValue, setEditValue] = useState(description)
-  const inputRef = useRef(null)
+function Task({ task, onToggleCompleted, onDeleteTask, editId, onStartEdit, onUpdateTask, onTimeUpdate }) {
+  const { description, completed, createdAt, id } = task;
+
+  const isEdit = editId === id;
+  const [editValue, setEditValue] = useState(description);
+  const inputRef = useRef(null);
 
   useEffect(() => {
     if (isEdit) {
-      inputRef.current.focus()
+      inputRef.current.focus();
     }
-  }, [isEdit])
+  }, [isEdit]);
 
   const handleEditChange = (e) => {
-    setEditValue(e.target.value)
-  }
+    setEditValue(e.target.value);
+  };
 
   const handleEditSubmit = (e) => {
     if (e.key === 'Enter') {
-      onUpdateTask(id, editValue)
+      onUpdateTask(id, editValue);
     }
-  }
-
+  };
+  
   return (
     <>
       <li className={`${completed ? 'completed' : ''} ${isEdit ? 'editing' : ''}`}>
         <div className="view">
           <input className="toggle" type="checkbox" checked={completed} readOnly onChange={onToggleCompleted} />
           <label>
-            <span className="description">{description}</span>
+            <span className="description">
+              {description}
+
+               <Timer 
+          initialTime={task.timeSpent || 0}
+           completed={completed}
+          
+        />
+            </span>
             <span className="created">created {formatDistanceToNow(createdAt, { addSuffix: true })}</span>
           </label>
 
@@ -53,12 +64,13 @@ function Task({ task, onToggleCompleted, onDeleteTask, editId, onStartEdit, onUp
         )}
       </li>
     </>
-  )
+  );
 }
 
 Task.propTypes = {
   task: PropTypes.shape({
     id: PropTypes.number.isRequired,
+     timeSpent: PropTypes.number,
     description: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,
     createdAt: PropTypes.instanceOf(Date).isRequired,
@@ -68,6 +80,7 @@ Task.propTypes = {
   editId: PropTypes.number,
   onStartEdit: PropTypes.func.isRequired,
   onUpdateTask: PropTypes.func.isRequired,
-}
+   onTimeUpdate: PropTypes.func,
+};
 
-export default Task
+export default Task;

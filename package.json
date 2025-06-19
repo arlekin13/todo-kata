@@ -59,12 +59,11 @@
       "pre-commit": "lint-staged"
     }
   },
-  "lint-stages":{
-    ".js":[
+  "lint-stages": {
+    ".js": [
       "git add",
       "eslint --fix",
       "prettier --write"
-
     ]
-  }  
+  }
 }

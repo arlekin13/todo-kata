@@ -23,13 +23,11 @@ button::-moz-focus-inner {
   font-size: 18px !important ;
   width: 18px;
   height: 18px;
-      color: #cc9a9a;
-    margin: auto 0 11px;
-    transition: color 0.2s ease-out;
-    cursor: pointer;
+  color: #cc9a9a;
+  margin: auto 0 11px;
+  transition: color 0.2s ease-out;
+  cursor: pointer;
 }
-
-
 
 .hidden {
   display: none;

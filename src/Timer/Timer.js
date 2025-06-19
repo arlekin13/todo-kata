@@ -1,39 +1,36 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './Timer'
+import './Timer';
 import PropTypes from 'prop-types';
 import { compareAsc } from 'date-fns';
 
-function Timer({ initialTime,completed }) {
+function Timer({ initialTime, completed }) {
   const [time, setTime] = useState(initialTime);
   const [isActive, setIsActive] = useState(false);
   const animationRef = useRef();
-  const startTimeRef = useRef(null)
-   const accTimeRef = useRef(initialTime)
+  const startTimeRef = useRef(null);
+  const accTimeRef = useRef(initialTime);
 
   const handlePlayPause = () => {
-   
-   setIsActive(!isActive)
+    setIsActive(!isActive);
   };
 
   useEffect(() => {
     if (isActive && !completed) {
       const updateTimer = (timestamp) => {
-       if (!startTimeRef.current){
-        startTimeRef.current = performance.now() 
-      
-    }
+        if (!startTimeRef.current) {
+          startTimeRef.current = performance.now();
+        }
 
-    const now = performance.now();
-    const elapsed = now - startTimeRef.current
-     setTime(accTimeRef.current+ elapsed);
-        
-       
+        const now = performance.now();
+        const elapsed = now - startTimeRef.current;
+        setTime(accTimeRef.current + elapsed);
+
         animationRef.current = requestAnimationFrame(updateTimer);
       };
 
       animationRef.current = requestAnimationFrame(updateTimer);
-    }else{
-      cancelAnimationFrame(animationRef.current)
+    } else {
+      cancelAnimationFrame(animationRef.current);
       accTimeRef.current = time;
       startTimeRef.current = null;
     }
@@ -43,8 +40,7 @@ function Timer({ initialTime,completed }) {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [isActive,completed]);
-
+  }, [isActive, completed]);
 
   const formatTime = (ms) => {
     const totalSeconds = Math.floor(ms / 1000);
@@ -55,10 +51,7 @@ function Timer({ initialTime,completed }) {
 
   return (
     <div>
-    <button 
-        className={` ${isActive ? 'icon-pause' : 'icon-play'}`}
-        onClick={handlePlayPause}
-      >
+      <button className={` ${isActive ? 'icon-pause' : 'icon-play'}`} onClick={handlePlayPause}>
         {isActive ? '⏸' : '▶'}
       </button>
       <span className="timer-display">{formatTime(time)}</span>
@@ -69,7 +62,6 @@ function Timer({ initialTime,completed }) {
 Timer.propTypes = {
   initialTime: PropTypes.number.isRequired,
   copmleted: PropTypes.bool.isRequired,
-  
 };
 
 Timer.defaultProps = {

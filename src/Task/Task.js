@@ -28,7 +28,7 @@ function Task({ task, onToggleCompleted, onDeleteTask, editId, onStartEdit, onUp
       onUpdateTask(id, editValue);
     }
   };
-  
+
   return (
     <>
       <li className={`${completed ? 'completed' : ''} ${isEdit ? 'editing' : ''}`}>
@@ -38,11 +38,7 @@ function Task({ task, onToggleCompleted, onDeleteTask, editId, onStartEdit, onUp
             <span className="description">
               {description}
 
-               <Timer 
-          initialTime={task.timeSpent || 0}
-           completed={completed}
-          
-        />
+              <Timer initialTime={task.timeSpent || 0} completed={completed} />
             </span>
             <span className="created">created {formatDistanceToNow(createdAt, { addSuffix: true })}</span>
           </label>
@@ -70,7 +66,7 @@ function Task({ task, onToggleCompleted, onDeleteTask, editId, onStartEdit, onUp
 Task.propTypes = {
   task: PropTypes.shape({
     id: PropTypes.number.isRequired,
-     timeSpent: PropTypes.number,
+    timeSpent: PropTypes.number,
     description: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,
     createdAt: PropTypes.instanceOf(Date).isRequired,
@@ -80,7 +76,7 @@ Task.propTypes = {
   editId: PropTypes.number,
   onStartEdit: PropTypes.func.isRequired,
   onUpdateTask: PropTypes.func.isRequired,
-   onTimeUpdate: PropTypes.func,
+  onTimeUpdate: PropTypes.func,
 };
 
 export default Task;

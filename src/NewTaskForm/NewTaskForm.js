@@ -24,7 +24,6 @@ function NewTaskForm({ onAddTask }) {
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
       />
-     
     </header>
   );
 }

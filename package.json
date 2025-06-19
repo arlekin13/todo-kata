@@ -61,9 +61,9 @@
   },
   "lint-stages": {
     ".js": [
-      "git add",
       "eslint --fix",
-      "prettier --write"
+      "prettier --write",
+            "git add"
     ]
   }
 }
